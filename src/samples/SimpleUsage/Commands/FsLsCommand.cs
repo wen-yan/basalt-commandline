@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using BasaltHexagons.CommandLine;
-using BasaltHexagons.CommandLine.Annotations;
+using Basalt.CommandLine;
+using Basalt.CommandLine.Annotations;
 
 namespace SimpleUsage.Commands;
 

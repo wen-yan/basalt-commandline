@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using BasaltHexagons.CommandLine;
-using BasaltHexagons.CommandLine.Annotations;
+using Basalt.CommandLine;
+using Basalt.CommandLine.Annotations;
 
 namespace MiddlewareDemo.Commands;
 
@@ -10,7 +10,7 @@ partial class AppCliCommandBuilder : RootCliCommandBuilder<AppCommand, AppComman
 {
     public AppCliCommandBuilder(IServiceProvider serviceProvider) : base(serviceProvider)
     {
-        this.Description = "BasaltHexagons.CommandLine middleware demo";
+        this.Description = "Basalt.CommandLine middleware demo";
     }
 }
 

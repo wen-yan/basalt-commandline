@@ -1,6 +1,6 @@
 using System;
-using BasaltHexagons.CommandLine;
-using BasaltHexagons.CommandLine.Annotations;
+using Basalt.CommandLine;
+using Basalt.CommandLine.Annotations;
 
 namespace SimpleUsage.Commands;
 
@@ -9,6 +9,6 @@ partial class AppCliCommandBuilder : RootCliCommandBuilder
 {
     public AppCliCommandBuilder(IServiceProvider serviceProvider) : base(serviceProvider)
     {
-        this.Description = "BasaltHexagons.CommandLine simple usage sample";
+        this.Description = "Basalt.CommandLine simple usage sample";
     }
 }

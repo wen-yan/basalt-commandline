@@ -1,11 +1,11 @@
 <Project>
     <PropertyGroup>
-        <Company>BasaltHexagons</Company>
+        <Company>Basalt</Company>
 
         <Authors>Yan Wen</Authors>
         <Copyright>Copyright (c) Yan Wen 2024.</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/wen-yan/basalthexagons-commandline</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/wen-yan/basalt-commandline</PackageProjectUrl>
 
         <PackageIcon>icon.png</PackageIcon>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -18,6 +18,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="../../build/basalthexagons.png" Pack="true" PackagePath="\icon.png" />
+        <None Include="../../build/basalt.png" Pack="true" PackagePath="\icon.png" />
     </ItemGroup>
 </Project>

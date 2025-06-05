@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.5.0"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing" Version="1.1.2"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0"/>
+        <PackageReference Include="MSTest.TestAdapter" Version="3.0.4"/>
+        <PackageReference Include="MSTest.TestFramework" Version="3.0.4"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Basalt.CommandLine.CodeGenerators\Basalt.CommandLine.CodeGenerators.csproj"/>
+        <ProjectReference Include="..\..\src\Basalt.CommandLine\Basalt.CommandLine.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-8+.cs"/>
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-8+.cs"/>
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-8+-expected.cs"/>
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-8+-expected.cs"/>
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-1-4.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-1-4.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-1-4-expected.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-1-4-expected.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-5-7.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-5-7.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-6-7-expected.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-6-7-expected.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-5-expected.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\basic-csharp-5-expected.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\nullable-csharp-8+.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\nullable-csharp-8+.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\nullable-csharp-8+-expected.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\nullable-csharp-8+-expected.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\globaloption-csharp-8+.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\globaloption-csharp-8+.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\globaloption-csharp-8+-expected.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\globaloption-csharp-8+-expected-level1.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\globaloption-csharp-8+-expected-level1.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\globaloption-csharp-8+-expected-level2.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\globaloption-csharp-8+-expected-level2.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\globaloption-csharp-8+-expected-level3.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\globaloption-csharp-8+-expected-level3.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\nocommand-csharp-8+.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\nocommand-csharp-8+.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\nocommand-csharp-8+-expected.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\nocommand-csharp-8+-expected.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\nocommand-nooptions-csharp-8+.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\nocommand-nooptions-csharp-8+.cs" />
+        <Compile Remove="CliCommandBuilderCodeGenerateTestsSources\nocommand-nooptions-csharp-8+-expected.cs" />
+        <EmbeddedResource Include="CliCommandBuilderCodeGenerateTestsSources\nocommand-nooptions-csharp-8+-expected.cs" />
+    </ItemGroup>
+
+</Project>

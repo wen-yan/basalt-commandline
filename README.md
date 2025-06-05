@@ -1,21 +1,21 @@
-[![ci](https://github.com/wen-yan/basalthexagons-commandline/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/wen-yan/basalthexagons-commandline/actions/workflows/ci.yaml)
-[![release](https://github.com/wen-yan/basalthexagons-commandline/actions/workflows/release.yaml/badge.svg?branch=master)](https://github.com/wen-yan/basalthexagons-commandline/actions/workflows/release.yaml)
+[![ci](https://github.com/wen-yan/basalt-commandline/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/wen-yan/basalt-commandline/actions/workflows/ci.yaml)
+[![release](https://github.com/wen-yan/basalt-commandline/actions/workflows/release.yaml/badge.svg?branch=master)](https://github.com/wen-yan/basalt-commandline/actions/workflows/release.yaml)
 
-# BasaltHexagons.CommandLine
+# Basalt.CommandLine
 
-## What is BasaltHexagons.CommandLine?
+## What is Basalt.CommandLine?
 
-BasaltHexagons.CommandLine is a project for building command line application using System.CommandLine package. It includes
+Basalt.CommandLine is a project for building command line application using System.CommandLine package. It includes
 - CLI command builder base classes
 - Code generators for generating CLI command builder classes
 - Base classes and interfaces for command
 - Extension methods for adding dependency injection
 
 
-Its code generator can generate code for building cli command from [command](https://github.com/wen-yan/basalthexagons-commandline/blob/master/src/src/BasaltHexagons.CommandLine/ICommand.cs) and option classes. It supports command line Option, GlobalOption, Argument and command hierarchy.
+Its code generator can generate code for building cli command from [command](https://github.com/wen-yan/basalt-commandline/blob/master/src/src/Basalt.CommandLine/ICommand.cs) and option classes. It supports command line Option, GlobalOption, Argument and command hierarchy.
 
 ## Code Sample
-Here is an example of using it to generate command line. Full sample code is [here](https://github.com/wen-yan/basalthexagons-commandline/tree/master/src/samples/SimpleUsage).
+Here is an example of using it to generate command line. Full sample code is [here](https://github.com/wen-yan/basalt-commandline/tree/master/src/samples/SimpleUsage).
 ```csharp
 #nullable disable
 partial class FsLsCommandOptions
@@ -63,5 +63,5 @@ class FsLsCommand : Command<FsLsCommandOptions>
 }
 ```
 
-More samples can be found in [samples](https://github.com/wen-yan/basalthexagons-commandline/tree/master/src/samples).
+More samples can be found in [samples](https://github.com/wen-yan/basalt-commandline/tree/master/src/samples).
 

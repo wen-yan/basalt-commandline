@@ -1,6 +1,6 @@
 ﻿using System.CommandLine;
 using System.Threading.Tasks;
-using BasaltHexagons.CommandLine;
+using Basalt.CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
