@@ -18,7 +18,7 @@ jobs:
       - name: Setup Dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.106
+          dotnet-version: 6.0.428
 
       - name: Generate Release Version
         id: generate-release-version
