@@ -42,7 +42,11 @@ public class IntegrationTests
                 public FsCliCommandBuilder(IServiceProvider serviceProvider) : base(serviceProvider)
                 {
                     this.Description = "fs command";
-                    this.EndpointOption = new(new[] {"--endpoint"}, "endpoint of the file system") { IsRequired = true };
+                    this.EndpointOption = new("--endpoint")
+                    {
+                        Description = "endpoint of the file system",
+                        Required = true
+                    };
                 }
             }
             class FsCommand : Command<FsCommandOptions>
@@ -63,7 +67,10 @@ public class IntegrationTests
                 public FsLsCliCommandBuilder(IServiceProvider serviceProvider) : base(serviceProvider)
                 {
                     this.Description = "ls command";
-                    this.DirectoryArgument = new("directory", "target directory of ls command");
+                    this.DirectoryArgument = new("directory")
+                    {
+                        Description = "target directory of ls command",
+                    };
                 }
             }
             class FsLsCommand : Command<FsLsCommandOptions>
@@ -88,7 +95,11 @@ public class IntegrationTests
                 public AppCliCommandBuilder(IServiceProvider serviceProvider) : base(serviceProvider)
                 {
                     this.Description = "Basalt.CommandLine simple usage sample";
-                    this.EndpointOption = new(new[] {"--endpoint"}, "endpoint of the file system") { IsRequired = true };
+                    this.EndpointOption = new("--endpoint")
+                    {
+                        Description = "endpoint of the file system",
+                        Required = true,
+                    };
                 }
             }
 
@@ -146,7 +157,7 @@ public class IntegrationTests
                       try
                       {
                           RootCommand rootCommand = host.Services.GetRequiredService<RootCommand>();
-                          await rootCommand.InvokeAsync(args);
+                          await rootCommand.Parse(args).InvokeAsync();
                       }
                       finally
                       {
@@ -171,6 +182,7 @@ public class IntegrationTests
             .Where(x => Path.GetExtension(x) == ".dll")
             .Where(x => !x.EndsWith("Basalt.CommandLine.CodeGenerators.dll"))
             .Append(typeof(object).GetTypeInfo().Assembly.Location)
+            .Append(Path.Combine(Path.GetDirectoryName(typeof(object).GetTypeInfo().Assembly.Location)!, "netstandard.dll"))
             .Append(typeof(Console).GetTypeInfo().Assembly.Location)
             .Append(Path.Combine(basePath, "System.Runtime.dll"))
             .Append(Path.Combine(basePath, "System.Runtime.Extensions.dll"))
@@ -204,8 +216,9 @@ public class IntegrationTests
         {
             var errors = compilationResult.Diagnostics
                 .Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error)
+                .Select(diagnostic => diagnostic.ToString())
                 .ToList();
-            Assert.Fail($"Failed to compile code, errors: {errors}");
+            Assert.Fail($"Failed to compile code, code: {code}, errors: {string.Join(Environment.NewLine, errors)}");
         }
         else
         {

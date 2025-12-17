@@ -33,18 +33,21 @@ namespace MyNamespace
         {
             string name = this.GetCliCommandBuilderAttribute().Name;
             global::System.CommandLine.Command cliCommand = this.CreateCliCommand(name, this.Description);
-            cliCommand.AddGlobalOption(OptionLevel1AOption);
-            cliCommand.AddGlobalOption(OptionLevel1BOption);
-            cliCommand.AddGlobalOption(OptionLevel1COption);
-            cliCommand.AddOption(OptionLevel1DOption);
-            cliCommand.SetHandler(async (global::System.CommandLine.Invocation.InvocationContext invocationContext) =>
+            this.OptionLevel1AOption.Recursive = true;
+            cliCommand.Add(this.OptionLevel1AOption);
+            this.OptionLevel1BOption.Recursive = true;
+            cliCommand.Add(this.OptionLevel1BOption);
+            this.OptionLevel1COption.Recursive = true;
+            cliCommand.Add(this.OptionLevel1COption);
+            cliCommand.Add(this.OptionLevel1DOption);
+            cliCommand.SetAction(async (global::System.CommandLine.ParseResult parseResult, global::System.Threading.CancellationToken cancellationToken) =>
             {
-                global::System.CommandLine.Parsing.ParseResult parseResult = invocationContext.BindingContext.ParseResult;
-                global::MyNamespace.Level1CommandOptions options = new global::MyNamespace.Level1CommandOptions(OptionLevel1A: parseResult.GetValueForOption(this.OptionLevel1AOption), OptionLevel1B: parseResult.GetValueForOption(this.OptionLevel1BOption), OptionLevel1C: parseResult.GetValueForOption(this.OptionLevel1COption), OptionLevel1D: parseResult.GetValueForOption(this.OptionLevel1DOption));
+                global::MyNamespace.Level1CommandOptions options = new global::MyNamespace.Level1CommandOptions(OptionLevel1A: parseResult.GetValue(this.OptionLevel1AOption), OptionLevel1B: parseResult.GetValue(this.OptionLevel1BOption), OptionLevel1C: parseResult.GetValue(this.OptionLevel1COption), OptionLevel1D: parseResult.GetValue(this.OptionLevel1DOption));
                 await using (global::Microsoft.Extensions.DependencyInjection.AsyncServiceScope scope = this.ServiceProvider.CreateAsyncScope())
                 {
                     global::Basalt.CommandLine.CommandContext context = scope.ServiceProvider.GetRequiredService<global::Basalt.CommandLine.CommandContext>();
-                    context.InvocationContext = invocationContext;
+                    context.ParseResult = parseResult;
+                    context.CancellationToken = cancellationToken;
                     context.Options = options;
                     global::MyNamespace.Level1Command command = scope.ServiceProvider.GetRequiredService<global::MyNamespace.Level1Command>();
                     await command.ExecuteAsync();

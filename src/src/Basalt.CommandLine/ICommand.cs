@@ -1,5 +1,6 @@
 using System;
-using System.CommandLine.Invocation;
+using System.CommandLine;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Basalt.CommandLine;
@@ -10,9 +11,14 @@ namespace Basalt.CommandLine;
 public sealed class CommandContext
 {
     /// <summary>
-    /// InvocationContext instance.
+    /// Command line parse result.
     /// </summary>
-    public InvocationContext? InvocationContext { get; set; }
+    public ParseResult? ParseResult { get; set; }
+    
+    /// <summary>
+    /// Cancellation token
+    /// </summary>
+    public CancellationToken CancellationToken { get; set; }
 
     /// <summary>
     /// Command options instance.

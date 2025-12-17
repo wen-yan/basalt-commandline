@@ -48,18 +48,21 @@ namespace MyNamespace
         {
             string name = this.GetCliCommandBuilderAttribute().Name;
             global::System.CommandLine.Command cliCommand = this.CreateCliCommand(name, this.Description);
-            cliCommand.AddGlobalOption(OptionLevel2AOption);
-            cliCommand.AddGlobalOption(OptionLevel2BOption);
-            cliCommand.AddGlobalOption(OptionLevel2COption);
-            cliCommand.AddOption(OptionLevel2DOption);
-            cliCommand.SetHandler(async (global::System.CommandLine.Invocation.InvocationContext invocationContext) =>
+            this.OptionLevel2AOption.Recursive = true;
+            cliCommand.Add(this.OptionLevel2AOption);
+            this.OptionLevel2BOption.Recursive = true;
+            cliCommand.Add(this.OptionLevel2BOption);
+            this.OptionLevel2COption.Recursive = true;
+            cliCommand.Add(this.OptionLevel2COption);
+            cliCommand.Add(this.OptionLevel2DOption);
+            cliCommand.SetAction(async (global::System.CommandLine.ParseResult parseResult, global::System.Threading.CancellationToken cancellationToken) =>
             {
-                global::System.CommandLine.Parsing.ParseResult parseResult = invocationContext.BindingContext.ParseResult;
-                global::MyNamespace.Level2CommandOptions options = new global::MyNamespace.Level2CommandOptions(OptionLevel1A: parseResult.GetValueForOption(this.GetRequiredParentBuilder<global::MyNamespace.Level1CommandBuilder>().OptionLevel1AOption), OptionLevel1B: parseResult.GetValueForOption(this.GetRequiredParentBuilder<global::MyNamespace.Level1CommandBuilder>().OptionLevel1BOption), OptionLevel1C: parseResult.GetValueForOption(this.GetRequiredParentBuilder<global::MyNamespace.Level1CommandBuilder>().OptionLevel1COption), OptionLevel2A: parseResult.GetValueForOption(this.OptionLevel2AOption), OptionLevel2B: parseResult.GetValueForOption(this.OptionLevel2BOption), OptionLevel2C: parseResult.GetValueForOption(this.OptionLevel2COption), OptionLevel2D: parseResult.GetValueForOption(this.OptionLevel2DOption));
+                global::MyNamespace.Level2CommandOptions options = new global::MyNamespace.Level2CommandOptions(OptionLevel1A: parseResult.GetValue(this.GetRequiredParentBuilder<global::MyNamespace.Level1CommandBuilder>().OptionLevel1AOption), OptionLevel1B: parseResult.GetValue(this.GetRequiredParentBuilder<global::MyNamespace.Level1CommandBuilder>().OptionLevel1BOption), OptionLevel1C: parseResult.GetValue(this.GetRequiredParentBuilder<global::MyNamespace.Level1CommandBuilder>().OptionLevel1COption), OptionLevel2A: parseResult.GetValue(this.OptionLevel2AOption), OptionLevel2B: parseResult.GetValue(this.OptionLevel2BOption), OptionLevel2C: parseResult.GetValue(this.OptionLevel2COption), OptionLevel2D: parseResult.GetValue(this.OptionLevel2DOption));
                 await using (global::Microsoft.Extensions.DependencyInjection.AsyncServiceScope scope = this.ServiceProvider.CreateAsyncScope())
                 {
                     global::Basalt.CommandLine.CommandContext context = scope.ServiceProvider.GetRequiredService<global::Basalt.CommandLine.CommandContext>();
-                    context.InvocationContext = invocationContext;
+                    context.ParseResult = parseResult;
+                    context.CancellationToken = cancellationToken;
                     context.Options = options;
                     global::MyNamespace.Level2Command command = scope.ServiceProvider.GetRequiredService<global::MyNamespace.Level2Command>();
                     await command.ExecuteAsync();

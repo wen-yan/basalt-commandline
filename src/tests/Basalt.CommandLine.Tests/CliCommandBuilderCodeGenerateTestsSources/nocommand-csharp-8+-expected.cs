@@ -33,10 +33,11 @@ namespace MyNamespace
         {
             string name = this.GetCliCommandBuilderAttribute().Name;
             global::System.CommandLine.Command cliCommand = this.CreateCliCommand(name, this.Description);
-            cliCommand.AddOption(Option1Option);
-            cliCommand.AddOption(Option2Option);
-            cliCommand.AddGlobalOption(GlobalOption1Option);
-            cliCommand.AddArgument(Argument1Argument);
+            cliCommand.Add(this.Option1Option);
+            cliCommand.Add(this.Option2Option);
+            this.GlobalOption1Option.Recursive = true;
+            cliCommand.Add(this.GlobalOption1Option);
+            cliCommand.Add(this.Argument1Argument);
             this.OnCommandLineBuilt(cliCommand);
             return cliCommand;
         }

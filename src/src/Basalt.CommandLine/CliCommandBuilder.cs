@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.CommandLine;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Basalt.CommandLine.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -55,7 +56,7 @@ public abstract class CliCommandBuilder : ICliCommandBuilder
 
         foreach (ICliCommandBuilder child in children)
         {
-            cliCommand.AddCommand(child.CliCommand);
+            cliCommand.Add(child.CliCommand);
         }
 
         return cliCommand;
