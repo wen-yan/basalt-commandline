@@ -20,8 +20,15 @@ partial class FsLsCliCommandBuilder : CliCommandBuilder<FsLsCommand, FsLsCommand
     public FsLsCliCommandBuilder(IServiceProvider serviceProvider) : base(serviceProvider)
     {
         this.Description = "ls command";
-        this.ColorOption = new(["--color", "-c"], () => ConsoleColor.Yellow, "command output color");
-        this.DirectoryArgument = new("directory", "target directory of ls command");
+        this.ColorOption = new("--color", "-c")
+        {
+            Description = "command output color",
+            DefaultValueFactory = _ => ConsoleColor.Yellow,
+        };
+        this.DirectoryArgument = new("directory")
+        {
+            Description = "target directory of ls command"
+        };
     }
 }
 

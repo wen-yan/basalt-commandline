@@ -17,7 +17,11 @@ partial class FsCliCommandBuilder : CliCommandBuilder<FsCommand, FsCommandOption
     public FsCliCommandBuilder(IServiceProvider serviceProvider) : base(serviceProvider)
     {
         this.Description = "fs command";
-        this.EndpointOption = new(["--endpoint"], "endpoint of the file system") { IsRequired = true };
+        this.EndpointOption = new("--endpoint")
+        {
+            Description = "endpoint of the file system",
+            Required = true
+        };
     }
 }
 

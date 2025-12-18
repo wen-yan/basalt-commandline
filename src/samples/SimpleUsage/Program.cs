@@ -22,6 +22,6 @@ static class Program
 
         IHost host = hostBuilder.Build();
         RootCommand rootCommand = host.Services.GetRequiredService<RootCommand>();
-        return await rootCommand.InvokeAsync(args);
+        return await rootCommand.Parse(args).InvokeAsync();
     }
 }
