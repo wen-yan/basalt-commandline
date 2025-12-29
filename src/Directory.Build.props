@@ -6,4 +6,24 @@
         <LangVersion>12</LangVersion>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     </PropertyGroup>
+
+    <PropertyGroup>
+        <Microsoft_Extensions_Hosting_Version>7.0.1</Microsoft_Extensions_Hosting_Version>
+        <Microsoft_Extensions_DependencyInjection_Version>8.0.0</Microsoft_Extensions_DependencyInjection_Version>
+        <System_CommandLine_Version>2.0.1</System_CommandLine_Version>
+        <Microsoft_VisualStudio_Threading_Analyzers_Version>17.14.15</Microsoft_VisualStudio_Threading_Analyzers_Version>
+        <Microsoft_CodeAnalysis_Analyzers_Version>3.3.4</Microsoft_CodeAnalysis_Analyzers_Version>
+        <Microsoft_CodeAnalysis_CSharp_Version>4.5.0</Microsoft_CodeAnalysis_CSharp_Version>
+        <Microsoft_CodeAnalysis_CSharp_Workspaces_Version>4.5.0</Microsoft_CodeAnalysis_CSharp_Workspaces_Version>
+        <Microsoft_CodeAnalysis_Workspaces_Common_Version>4.5.0</Microsoft_CodeAnalysis_Workspaces_Common_Version>
+        <Microsoft_CodeAnalysis_Common_Version>4.5.0</Microsoft_CodeAnalysis_Common_Version>
+    </PropertyGroup>
+
+    <!-- packages for tests -->
+    <PropertyGroup>
+        <Microsoft_CodeAnalysis_CSharp_SourceGenerators_Testing_Version>1.1.2</Microsoft_CodeAnalysis_CSharp_SourceGenerators_Testing_Version>
+        <Microsoft_NET_Test_Sdk_Version>17.6.0</Microsoft_NET_Test_Sdk_Version>
+        <MSTest_TestAdapter_Version>3.0.4</MSTest_TestAdapter_Version>
+        <MSTest_TestFramework_Version>3.0.4</MSTest_TestFramework_Version>
+    </PropertyGroup>
 </Project>

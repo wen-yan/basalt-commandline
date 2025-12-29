@@ -53,7 +53,7 @@ class FsLsCommand : Command<FsLsCommandOptions>
         Console.ForegroundColor = this.Options.Color;
         try
         {
-            await this.DemoService.WriteLine($"FsLsCommand output, endpoint: {this.Options.Endpoint}, target: {this.Options.Directory}");
+            await this.DemoService.WriteLine($"FsLsCommand output, endpoint: {this.Options.Endpoint}, target: {this.Options.Directory}").ConfigureAwait(false);
         }
         finally
         {

@@ -244,7 +244,7 @@ public class CliCommandBuilderCodeGenerator : IIncrementalGenerator
                             {{cliCommandBuilderType.CommandTypeSymbol.ToFullyQualifiedFormatString()}} command =
                                  scope.ServiceProvider.GetRequiredService<{{cliCommandBuilderType.CommandTypeSymbol.ToFullyQualifiedFormatString()}}>();
                          
-                             await command.ExecuteAsync();
+                             await command.ExecuteAsync().ConfigureAwait(false);
                          }
                      });
                      """;

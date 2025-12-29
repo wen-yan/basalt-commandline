@@ -23,16 +23,16 @@ public class CliCommandBuilderCodeGeneratorTests
     [DataRow(LanguageVersion.CSharp2)]
     [DataRow(LanguageVersion.CSharp3)]
     [DataRow(LanguageVersion.CSharp4)]
-    public Task Initialize_Basic_1_4_Test(LanguageVersion langVersion)
+    public Task Initialize_Basic_1_4_TestAsync(LanguageVersion langVersion)
     {
-        return RunTest(langVersion, "basic-csharp-1-4.cs", [("MyNamespace.FsCommandBuilder.g.cs", "basic-csharp-1-4-expected.cs")], compilerDiagnostics: CompilerDiagnostics.None);
+        return RunTestAsync(langVersion, "basic-csharp-1-4.cs", [("MyNamespace.FsCommandBuilder.g.cs", "basic-csharp-1-4-expected.cs")], compilerDiagnostics: CompilerDiagnostics.None);
     }
 
     [DataTestMethod]
     [DataRow(LanguageVersion.CSharp5)]
-    public Task Initialize_Basic_5_Test(LanguageVersion langVersion)
+    public Task Initialize_Basic_5_TestAsync(LanguageVersion langVersion)
     {
-        return RunTest(langVersion, "basic-csharp-5-7.cs", [("MyNamespace.FsCommandBuilder.g.cs", "basic-csharp-5-expected.cs")]);
+        return RunTestAsync(langVersion, "basic-csharp-5-7.cs", [("MyNamespace.FsCommandBuilder.g.cs", "basic-csharp-5-expected.cs")]);
     }
 
     [DataTestMethod]
@@ -41,9 +41,9 @@ public class CliCommandBuilderCodeGeneratorTests
     [DataRow(LanguageVersion.CSharp7_1)]
     [DataRow(LanguageVersion.CSharp7_2)]
     [DataRow(LanguageVersion.CSharp7_3)]
-    public Task Initialize_Basic_6_7_Test(LanguageVersion langVersion)
+    public Task Initialize_Basic_6_7_TestAsync(LanguageVersion langVersion)
     {
-        return RunTest(langVersion, "basic-csharp-5-7.cs", [("MyNamespace.FsCommandBuilder.g.cs", "basic-csharp-6-7-expected.cs")]);
+        return RunTestAsync(langVersion, "basic-csharp-5-7.cs", [("MyNamespace.FsCommandBuilder.g.cs", "basic-csharp-6-7-expected.cs")]);
     }
 
     [DataTestMethod]
@@ -54,9 +54,9 @@ public class CliCommandBuilderCodeGeneratorTests
     [DataRow(LanguageVersion.LatestMajor)]
     [DataRow(LanguageVersion.Latest)]
     [DataRow(LanguageVersion.Default)]
-    public Task Initialize_Basic_8_plus_Test(LanguageVersion langVersion)
+    public Task Initialize_Basic_8_plus_TestAsync(LanguageVersion langVersion)
     {
-        return RunTest(langVersion, "basic-csharp-8+.cs",
+        return RunTestAsync(langVersion, "basic-csharp-8+.cs",
         [
             ("MyNamespace.FsCommandBuilder.g.cs", "basic-csharp-8+-expected.cs"),
         ]);
@@ -70,9 +70,9 @@ public class CliCommandBuilderCodeGeneratorTests
     [DataRow(LanguageVersion.LatestMajor)]
     [DataRow(LanguageVersion.Latest)]
     [DataRow(LanguageVersion.Default)]
-    public Task Initialize_Nullable_8_plus_Test(LanguageVersion langVersion)
+    public Task Initialize_Nullable_8_plus_TestAsync(LanguageVersion langVersion)
     {
-        return RunTest(langVersion, "nullable-csharp-8+.cs",
+        return RunTestAsync(langVersion, "nullable-csharp-8+.cs",
         [
             ("MyNamespace.FsCommandBuilder.g.cs", "nullable-csharp-8+-expected.cs"),
         ]);
@@ -86,9 +86,9 @@ public class CliCommandBuilderCodeGeneratorTests
     [DataRow(LanguageVersion.LatestMajor)]
     [DataRow(LanguageVersion.Latest)]
     [DataRow(LanguageVersion.Default)]
-    public Task Initialize_GlobalOption_8_plus_Test(LanguageVersion langVersion)
+    public Task Initialize_GlobalOption_8_plus_TestAsync(LanguageVersion langVersion)
     {
-        return RunTest(langVersion, "globaloption-csharp-8+.cs",
+        return RunTestAsync(langVersion, "globaloption-csharp-8+.cs",
         [
             ("MyNamespace.Level1CommandBuilder.g.cs", "globaloption-csharp-8+-expected-level1.cs"),
             ("MyNamespace.Level2CommandBuilder.g.cs", "globaloption-csharp-8+-expected-level2.cs"),
@@ -104,9 +104,9 @@ public class CliCommandBuilderCodeGeneratorTests
     [DataRow(LanguageVersion.LatestMajor)]
     [DataRow(LanguageVersion.Latest)]
     [DataRow(LanguageVersion.Default)]
-    public Task Initialize_NoCommand_8_plus_Test(LanguageVersion langVersion)
+    public Task Initialize_NoCommand_8_plus_TestAsync(LanguageVersion langVersion)
     {
-        return RunTest(langVersion, "nocommand-csharp-8+.cs", [("MyNamespace.FsCommandBuilder.g.cs", "nocommand-csharp-8+-expected.cs")]);
+        return RunTestAsync(langVersion, "nocommand-csharp-8+.cs", [("MyNamespace.FsCommandBuilder.g.cs", "nocommand-csharp-8+-expected.cs")]);
     }
 
     [DataTestMethod]
@@ -117,14 +117,14 @@ public class CliCommandBuilderCodeGeneratorTests
     [DataRow(LanguageVersion.LatestMajor)]
     [DataRow(LanguageVersion.Latest)]
     [DataRow(LanguageVersion.Default)]
-    public Task Initialize_NoCommand_NoOptions_8_plus_Test(LanguageVersion langVersion)
+    public Task Initialize_NoCommand_NoOptions_8_plus_TestAsync(LanguageVersion langVersion)
     {
-        return RunTest(langVersion, "nocommand-nooptions-csharp-8+.cs", [("MyNamespace.FsCommandBuilder.g.cs", "nocommand-nooptions-csharp-8+-expected.cs")]);
+        return RunTestAsync(langVersion, "nocommand-nooptions-csharp-8+.cs", [("MyNamespace.FsCommandBuilder.g.cs", "nocommand-nooptions-csharp-8+-expected.cs")]);
     }
 
-    private static async Task RunTest(LanguageVersion langVersion, string source, (string expectedFileName, string expected)[] expectedGenerated, CompilerDiagnostics compilerDiagnostics = CompilerDiagnostics.Errors)
+    private static async Task RunTestAsync(LanguageVersion langVersion, string source, (string expectedFileName, string expected)[] expectedGenerated, CompilerDiagnostics compilerDiagnostics = CompilerDiagnostics.Errors)
     {
-        string sourceCode = await LoadEmbeddedResources(source);
+        string sourceCode = await LoadEmbeddedResourcesAsync(source).ConfigureAwait(false);
 
         CSharpSourceGeneratorTest<CliCommandBuilderCodeGenerator, DefaultVerifier> test = new()
         {
@@ -157,22 +157,22 @@ public class CliCommandBuilderCodeGeneratorTests
         foreach ((string expectedFileName, string expected) in expectedGenerated)
         {
             string filename = Path.Combine("Basalt.CommandLine.CodeGenerators", "Basalt.CommandLine.CodeGenerators.CliCommandBuilderCodeGenerator", expectedFileName);
-            SourceText content = SourceText.From(LoadEmbeddedResources(expected).Result, Encoding.UTF8);
+            SourceText content = SourceText.From(await LoadEmbeddedResourcesAsync(expected), Encoding.UTF8);
 
             test.TestState.GeneratedSources.Add((filename, content));
         }
 
-        await test.RunAsync();
+        await test.RunAsync().ConfigureAwait(false);
     }
 
-    private static async Task<string> LoadEmbeddedResources(string resourceName)
+    private static async Task<string> LoadEmbeddedResourcesAsync(string resourceName)
     {
         await using Stream stream = Assembly.GetExecutingAssembly()
                                         .GetManifestResourceStream($"Basalt.CommandLine.Tests.CliCommandBuilderCodeGenerateTestsSources.{resourceName}") ??
                                     throw new ApplicationException($"Can't load embedded resources: {resourceName}");
 
         using TextReader reader = new StreamReader(stream);
-        string content = await reader.ReadToEndAsync();
+        string content = await reader.ReadToEndAsync().ConfigureAwait(false);
 
         content = content.Replace("\r\n", "\n");
         content = content.Replace("\r", "\n");

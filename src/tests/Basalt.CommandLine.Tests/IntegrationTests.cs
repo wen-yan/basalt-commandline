@@ -17,7 +17,7 @@ namespace Basalt.CommandLine.Tests;
 public class IntegrationTests
 {
     [TestMethod]
-    public void GlobalOption_Test()
+    public async Task GlobalOption_TestAsync()
     {
         string code =
             """
@@ -52,7 +52,7 @@ public class IntegrationTests
             class FsCommand : Command<FsCommandOptions>
             {
                 public FsCommand(CommandContext commandContext) : base(commandContext) {}
-                public override async ValueTask ExecuteAsync() => await Console.Out.WriteLineAsync($"FsCommand output, endpoint: {this.Options.Endpoint}");
+                public override async ValueTask ExecuteAsync() => await Console.Out.WriteLineAsync($"FsCommand output, endpoint: {this.Options.Endpoint}").ConfigureAwait(false);
             }
 
             partial class FsLsCommandOptions
@@ -80,12 +80,12 @@ public class IntegrationTests
             }
             """;
 
-        this.Test(code, $"FsCommand output, endpoint: test-endpoint{Environment.NewLine}", "fs", "--endpoint", "test-endpoint");
-        this.Test(code, $"FsLsCommand output, endpoint: test-endpoint, target: test-argument{Environment.NewLine}", "fs", "ls", "--endpoint", "test-endpoint", "test-argument");
+        await this.TestAsync(code, $"FsCommand output, endpoint: test-endpoint{Environment.NewLine}", "fs", "--endpoint", "test-endpoint");
+        await this.TestAsync(code, $"FsLsCommand output, endpoint: test-endpoint, target: test-argument{Environment.NewLine}", "fs", "ls", "--endpoint", "test-endpoint", "test-argument");
     }
 
     [TestMethod]
-    public void RootCommand_Test()
+    public async Task RootCommand_TestAsync()
     {
         string code =
             """
@@ -112,14 +112,14 @@ public class IntegrationTests
             class AppCommand : Command<AppCommandOptions>
             {
                 public AppCommand(CommandContext commandContext) : base(commandContext) {}
-                public override async ValueTask ExecuteAsync() => await Console.Out.WriteLineAsync($"AppCommand output, endpoint: {this.Options.Endpoint}");
+                public override async ValueTask ExecuteAsync() => await Console.Out.WriteLineAsync($"AppCommand output, endpoint: {this.Options.Endpoint}").ConfigureAwait(false);
             }
             """;
 
-        this.Test(code, $"AppCommand output, endpoint: test-endpoint{Environment.NewLine}", "--endpoint", "test-endpoint");
+        await this.TestAsync(code, $"AppCommand output, endpoint: test-endpoint{Environment.NewLine}", "--endpoint", "test-endpoint");
     }
 
-    private void Test(string code, string expectedResult, params string[] args)
+    private async Task TestAsync(string code, string expectedResult, params string[] args)
     {
         string finalCode =
             $$"""
@@ -157,7 +157,7 @@ public class IntegrationTests
                       try
                       {
                           RootCommand rootCommand = host.Services.GetRequiredService<RootCommand>();
-                          await rootCommand.Parse(args).InvokeAsync();
+                          await rootCommand.Parse(args).InvokeAsync().ConfigureAwait(false);
                       }
                       finally
                       {
@@ -169,10 +169,10 @@ public class IntegrationTests
               {{code}}
               """;
 
-        this.TestImpl(finalCode, expectedResult, args);
+        await this.TestImplAsync(finalCode, expectedResult, args);
     }
 
-    private void TestImpl(string code, string expectedResult, params string[] args)
+    private async Task TestImplAsync(string code, string expectedResult, params string[] args)
     {
         var syntaxTree = CSharpSyntaxTree.ParseText(code, new CSharpParseOptions(LanguageVersion.CSharp11));
         string basePath = Path.GetDirectoryName(typeof(System.Runtime.GCSettings).GetTypeInfo().Assembly.Location)!;
@@ -232,7 +232,7 @@ public class IntegrationTests
 
             assemblyContext.Unload();
 
-            Assert.AreEqual(expectedResult, result.Result);
+            Assert.AreEqual(expectedResult, await result);
         }
     }
 }

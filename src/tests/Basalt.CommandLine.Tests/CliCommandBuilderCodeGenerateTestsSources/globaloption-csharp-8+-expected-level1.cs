@@ -50,7 +50,7 @@ namespace MyNamespace
                     context.CancellationToken = cancellationToken;
                     context.Options = options;
                     global::MyNamespace.Level1Command command = scope.ServiceProvider.GetRequiredService<global::MyNamespace.Level1Command>();
-                    await command.ExecuteAsync();
+                    await command.ExecuteAsync().ConfigureAwait(false);
                 }
             });
             this.OnCommandLineBuilt(cliCommand);
