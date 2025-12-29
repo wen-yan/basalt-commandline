@@ -6,9 +6,9 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-22.04
     outputs:
-      version_prefix: ${{ steps.generate-release-version.outputs.version_prefix }}
-      version_suffix: ${{ steps.generate-release-version.outputs.version_suffix }}
-      version_package: ${{ steps.generate-release-version.outputs.version_package }}
+      version-prefix: ${{ steps.get-version.outputs.version-prefix }}
+      version-suffix: ${{ steps.get-version.outputs.version-suffix }}
+      version-package: ${{ steps.get-version.outputs.version-package }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,33 +20,43 @@ jobs:
         with:
           dotnet-version: 6.0.428
 
-      - name: Generate Release Version
-        id: generate-release-version
-        shell: pwsh
-        run: |
-          . ./src/build/build-utils.ps1
-          $Version = Get-ReleaseVersion
-          Write-Output "Version = $Version"
-          Write-Output "version_prefix=$($Version.VersionPrefix)" >> $env:GITHUB_OUTPUT
-          Write-Output "version_suffix=$($Version.VersionSuffix)" >> $env:GITHUB_OUTPUT
-          Write-Output "version_package=$($Version.PackageVersion)" >> $env:GITHUB_OUTPUT
+      - name: Get version
+        id: get-version
+        uses: wen-yan/basalt-shared/.github/actions/get-version@v1
+        with:
+          version-file-path: "src/Version.props"
 
       - name: Build
-        run: dotnet build --configuration Release /p:VersionPrefix=${{ steps.generate-release-version.outputs.version_prefix }} /p:VersionSuffix=${{ steps.generate-release-version.outputs.version_suffix }}
-        working-directory: ./src
+        uses: wen-yan/basalt-shared/.github/actions/dotnet-command@v1
+        with:
+          command: build
+          configuration: Release
+          working-directory: ./src
+          version-prefix: ${{ steps.get-version.outputs.version-prefix }}
+          version-suffix: ${{ steps.get-version.outputs.version-suffix }}
 
       - name: Test
-        run: dotnet test --configuration Release /p:VersionPrefix=${{ steps.generate-release-version.outputs.version_prefix }} /p:VersionSuffix=${{ steps.generate-release-version.outputs.version_suffix }}
-        working-directory: ./src
+        uses: wen-yan/basalt-shared/.github/actions/dotnet-command@v1
+        with:
+          command: test
+          configuration: Release
+          working-directory: ./src
+          version-prefix: ${{ steps.get-version.outputs.version-prefix }}
+          version-suffix: ${{ steps.get-version.outputs.version-suffix }}
 
       - name: Pack
-        run: dotnet pack --configuration Release /p:VersionPrefix=${{ steps.generate-release-version.outputs.version_prefix }} /p:VersionSuffix=${{ steps.generate-release-version.outputs.version_suffix }}
-        working-directory: ./src
+        uses: wen-yan/basalt-shared/.github/actions/dotnet-command@v1
+        with:
+          command: pack
+          configuration: Release
+          working-directory: ./src
+          version-prefix: ${{ steps.get-version.outputs.version-prefix }}
+          version-suffix: ${{ steps.get-version.outputs.version-suffix }}
 
       - name: Publish
         run: |
           ls -la ./src/src/Basalt.CommandLine/bin/Release
-          dotnet nuget push ./src/src/Basalt.CommandLine/bin/Release/Basalt.CommandLine.${{ steps.generate-release-version.outputs.version_package }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+          dotnet nuget push ./src/src/Basalt.CommandLine/bin/Release/Basalt.CommandLine.${{ steps.get-version.outputs.version-package }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
 
   create-release:
     needs: [publish-nuget-package]
@@ -59,7 +69,7 @@ jobs:
       - name: Create Github Release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create release-${{ needs.publish-nuget-package.outputs.version_package }} --generate-notes ${{ needs.publish-nuget-package.outputs.version_suffix == '' && '' || '--prerelease' }}
+        run: gh release create release-${{ needs.publish-nuget-package.outputs.version-package }} --generate-notes ${{ needs.publish-nuget-package.outputs.version-suffix == '' && '' || '--prerelease' }}
 
   non-master-branch:
     if: ${{ github.ref != 'refs/heads/master' }}
