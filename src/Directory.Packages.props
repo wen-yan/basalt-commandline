@@ -1,0 +1,23 @@
+<Project>
+    <PropertyGroup>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" />
+        <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="4.5.0"/>
+        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
+        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.5.0" />
+        <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.5.0" />
+        <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="7.0.1"/>
+        <PackageVersion Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15"/>
+        <PackageVersion Include="System.CommandLine" Version="2.0.1" />
+
+        <!-- for testing -->
+        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing" Version="1.1.2"/>
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.6.0"/>
+        <PackageVersion Include="MSTest.TestAdapter" Version="3.0.4"/>
+        <PackageVersion Include="MSTest.TestFramework" Version="3.0.4"/>
+    </ItemGroup>
+</Project>
